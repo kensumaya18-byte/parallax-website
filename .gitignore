@@ -1,0 +1,13 @@
+# OS junk files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor settings
+.vscode/
+
+# Dependencies (from npm, needed for the screenshot script)
+node_modules/
+
+# Generated pictures from screenshot.js
+screenshots/
