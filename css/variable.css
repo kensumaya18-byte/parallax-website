@@ -1,0 +1,206 @@
+:root {
+  /* =====================================================
+       1. COLOR PALETTE — Coffee Theme
+       ===================================================== */
+
+  /* --- Brand colors (main coffee tones) --- */
+  --color-espresso: #1a0f0a; /* darkest, near-black brown */
+  --color-dark-roast: #3e2318; /* deep brown */
+  --color-coffee: #6f4e37; /* classic coffee brown */
+  --color-caramel: #c47a3d; /* accent / CTA */
+  --color-gold: #e8b57a; /* golden crema highlight */
+  --color-cream: #f5e6d3; /* latte foam */
+  --color-bg: #faf6f1; /* warm page background */
+
+  /* --- Semantic (use these in components) --- */
+  --color-primary: var(--color-caramel);
+  --color-primary-hover: #a86228;
+  --color-secondary: var(--color-gold);
+  --color-accent: var(--color-gold);
+
+  /* --- Text --- */
+  --color-text: #1a0f0a; /* body text */
+  --color-text-light: #f5e6d3; /* on dark backgrounds */
+  --color-text-muted: #6f4e37; /* secondary text */
+  --color-text-subtle: #9a8478; /* hints, captions */
+
+  /* --- Backgrounds --- */
+  --color-bg-light: #ffffff;
+  --color-bg-warm: #faf6f1;
+  --color-bg-dark: #1a0f0a;
+
+  /* --- Borders --- */
+  --color-border: #e5dbd0;
+  --color-border-dark: rgba(232, 181, 122, 0.25);
+
+  /* --- States --- */
+  --color-success: #4a7c59;
+  --color-warning: #d4a017;
+  --color-error: #b23a2c;
+
+  /* --- Overlays --- */
+  --overlay-dark: rgba(26, 15, 10, 0.75);
+  --overlay-light: rgba(26, 15, 10, 0.35);
+  --overlay-gradient: linear-gradient(
+    180deg,
+    rgba(26, 15, 10, 0.35) 0%,
+    rgba(26, 15, 10, 0.75) 100%
+  );
+
+  /* =====================================================
+       2. TYPOGRAPHY
+       ===================================================== */
+
+  /* --- Font families --- */
+  --font-body:
+    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  --font-heading: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* --- Font sizes (fluid with clamp) --- */
+  --fs-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8rem); /* 12–13px */
+  --fs-sm: clamp(0.875rem, 0.85rem + 0.15vw, 0.95rem); /* 14–15px */
+  --fs-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 16–18px */
+  --fs-md: clamp(1.125rem, 1rem + 0.5vw, 1.25rem); /* 18–20px */
+  --fs-lg: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem); /* 20–24px */
+  --fs-xl: clamp(1.5rem, 1.25rem + 1.25vw, 2rem); /* 24–32px */
+  --fs-2xl: clamp(2rem, 1.5rem + 2.5vw, 3rem); /* 32–48px */
+  --fs-3xl: clamp(2.5rem, 2rem + 3vw, 4rem); /* 40–64px */
+  --fs-hero: clamp(2rem, 6vw, 4.5rem); /* hero title */
+
+  /* --- Font weights --- */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* --- Line heights --- */
+  --lh-tight: 1.1;
+  --lh-snug: 1.2;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.6;
+  --lh-loose: 1.8;
+
+  /* --- Letter spacing --- */
+  --ls-tight: -0.02em;
+  --ls-normal: 0;
+  --ls-wide: 0.08em;
+  --ls-wider: 0.15em;
+  --ls-widest: 0.2em;
+
+  /* =====================================================
+       3. SPACING SCALE (8px base)
+       ===================================================== */
+  --space-1: 0.25rem; /*  4px */
+  --space-2: 0.5rem; /*  8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-7: 1.75rem; /* 28px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+  --space-20: 5rem; /* 80px */
+  --space-24: 6rem; /* 96px */
+
+  /* --- Section padding --- */
+  --section-padding-y: 5rem;
+  --section-padding-x: 1.5rem;
+
+  /* =====================================================
+       4. LAYOUT & SIZING
+       ===================================================== */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1440px;
+
+  --hero-height-sm: 75svh;
+  --hero-height-md: 70svh;
+  --hero-height-lg: 80svh;
+  --hero-height-xl: 85svh;
+
+  --card-height: 480px;
+  --card-height-sm: 440px;
+  --card-radius: 16px;
+  --card-radius-sm: 12px;
+
+  /* =====================================================
+       5. BORDERS & RADIUS
+       ===================================================== */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+
+  --border-width: 1px;
+  --border-width-thick: 2px;
+
+  /* =====================================================
+       6. SHADOWS
+       ===================================================== */
+  --shadow-xs: 0 1px 2px rgba(26, 15, 10, 0.05);
+  --shadow-sm: 0 2px 8px rgba(26, 15, 10, 0.06);
+  --shadow-md: 0 4px 20px rgba(26, 15, 10, 0.08);
+  --shadow-lg: 0 8px 32px rgba(26, 15, 10, 0.12);
+  --shadow-xl: 0 16px 48px rgba(26, 15, 10, 0.18);
+  --shadow-glow: 0 8px 32px rgba(196, 122, 61, 0.35);
+
+  /* =====================================================
+       7. TRANSITIONS & ANIMATION
+       ===================================================== */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.4s ease;
+  --transition-flip: 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* =====================================================
+       8. Z-INDEX SCALE
+       ===================================================== */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 500;
+  --z-modal: 1000;
+  --z-toast: 1500;
+  --z-tooltip: 2000;
+
+  /* =====================================================
+       9. BREAKPOINTS (for reference — use in media queries)
+       ===================================================== */
+  /* 
+       SM:  max-width: 640px
+       MD:  641px – 1024px
+       LG:  1025px – 1440px
+       XL:  1441px and up
+    */
+}
+
+/* =====================================================
+   OPTIONAL: DARK MODE OVERRIDES
+   ===================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #f5e6d3;
+    --color-text-muted: #c4b5a5;
+    --color-bg: #1a0f0a;
+    --color-bg-light: #2a1a12;
+    --color-border: #3e2318;
+  }
+}
+
+@font-face {
+  font-family: "myfont1";
+  src: url("font/LibreCaslonCondensed-Bold.ttf") format("ttf");
+  font-weight: 700;
+}

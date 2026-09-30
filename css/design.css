@@ -1,0 +1,783 @@
+/* =====================================================
+   1. DESIGN TOKENS
+   ===================================================== */
+:root {
+  /* Colors */
+  --espresso: #1c1410;
+  --roast: #2a1e17;
+  --caramel: #c47a3d;
+  --gold: #e8b57a;
+  --cream: #f5ede3;
+  --muted: rgba(245, 237, 227, 0.6);
+
+  /* Typography */
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-heading: "Playfair Display", Georgia, serif;
+
+  /* Spacing scale */
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 5rem;
+
+  /* Layout */
+  --max-width: 1280px;
+
+  /* Visual */
+  --radius: 16px;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* =====================================================
+   2. RESET
+   ===================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--espresso);
+  color: var(--cream);
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* =====================================================
+   3. BASE / TYPOGRAPHY
+   ===================================================== */
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  line-height: 1.15;
+  margin: 0;
+}
+
+section {
+  padding: var(--space-xl) var(--space-md);
+}
+
+/* =====================================================
+   4. HEADER / NAV — mobile-first base
+   ===================================================== */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  background: rgba(28, 20, 16, 0.75);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(245, 237, 227, 0.1);
+}
+
+/* Nav container — mobile layout (stacked, space between) */
+.nav-container {
+  position: relative;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 0.75rem var(--space-md);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* ---------- Search — full width on mobile ---------- */
+.search-input {
+  position: relative;
+  flex: 1;
+  max-width: none;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon-svg {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.search-input input[type="search"] {
+  width: 100%;
+  padding: 0.6rem 1rem 0.6rem 2.5rem;
+  border: 1px solid rgba(245, 237, 227, 0.2);
+  border-radius: 999px;
+  background: rgba(245, 237, 227, 0.08);
+  color: var(--cream);
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+.search-input input[type="search"]::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+.search-input input[type="search"]:focus {
+  border-color: var(--gold);
+  background: rgba(245, 237, 227, 0.12);
+  box-shadow: 0 0 0 3px rgba(232, 181, 122, 0.2);
+}
+
+.search-input:focus-within .search-icon-svg {
+  color: var(--gold);
+}
+
+.search-input input[type="search"]::-webkit-search-decoration,
+.search-input input[type="search"]::-webkit-search-cancel-button,
+.search-input input[type="search"]::-webkit-search-results-button,
+.search-input input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+/* ---------- Nav list — hidden on mobile by default ---------- */
+.nav-list {
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+/* Open state — shown when .is-open */
+.nav-container.is-open .nav-list {
+  display: flex;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: var(--space-md);
+  right: var(--space-md);
+  padding: 1.25rem;
+  background: rgba(42, 30, 23, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  z-index: 150;
+}
+
+/* ---------- Nav link — mobile style ---------- */
+.nav-link {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--cream);
+  border-radius: 12px;
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--gold);
+  background: rgba(232, 181, 122, 0.1);
+}
+
+/* Underline only on desktop — see media query below */
+
+/* =====================================================
+   5. HAMBURGER — visible on mobile
+   ===================================================== */
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 200;
+  flex-shrink: 0;
+}
+
+.hamburger-menu span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--cream);
+  border-radius: 2px;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger-menu.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger-menu.is-open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger-menu.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* =====================================================
+   6. BUTTONS
+   ===================================================== */
+.btn {
+  display: inline-block;
+  padding: 0.9rem 1.8rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-align: center;
+  transition:
+    transform 0.2s,
+    background 0.2s,
+    color 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--caramel);
+  color: var(--espresso);
+}
+.btn-primary:hover {
+  background: var(--gold);
+}
+
+.btn-outline {
+  border: 2px solid var(--cream);
+  color: var(--cream);
+}
+.btn-outline:hover {
+  background: var(--cream);
+  color: var(--espresso);
+}
+
+/* =====================================================
+   7. HERO
+   ===================================================== */
+.hero {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding-top: 5rem;
+  background-color: var(--espresso);
+  background-image:
+    linear-gradient(rgba(28, 20, 16, 0.55), rgba(28, 20, 16, 0.85)),
+    url("../viewport-image/hero.jpg"),
+    radial-gradient(circle at 30% 20%, #4a3324, var(--espresso));
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+.hero-content {
+  max-width: 720px;
+}
+
+.hero-tagline {
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-bottom: var(--space-md);
+}
+
+.hero-title {
+  font-size: clamp(2.8rem, 9vw, 6rem);
+  margin-bottom: var(--space-md);
+}
+
+.hero-subtitle {
+  color: var(--muted);
+  font-size: 1.15rem;
+  margin-bottom: var(--space-lg);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* =====================================================
+   8. SHARED SECTION HEADINGS
+   ===================================================== */
+.section-header,
+.testimonial-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 3rem;
+}
+
+.section-tagline,
+.testimonial-tagline {
+  color: var(--caramel);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-title,
+.testimonial-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 0.75rem;
+}
+
+.section-subtitle,
+.testimonial-subtitle {
+  color: var(--muted);
+}
+
+/* =====================================================
+   9. BEST SELLERS — flip cards
+   ===================================================== */
+.cards-grid {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-lg);
+}
+
+.flip-card {
+  min-height: 420px;
+  perspective: 1000px;
+  outline-offset: 6px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+}
+
+/* Mobile tap-to-flip */
+.flip-card:active .flip-card-inner,
+.flip-card:focus-within .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.flip-card-front {
+  background: var(--roast);
+}
+
+.flip-card-front img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+}
+
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--gold);
+  color: var(--espresso);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+}
+
+.card-name {
+  font-size: 1.25rem;
+  padding: 1rem 1rem 0.25rem;
+}
+
+.card-price {
+  color: var(--gold);
+  font-weight: 700;
+  padding: 0 1rem;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(160deg, var(--caramel), #8a5a35);
+  color: var(--espresso);
+  padding: var(--space-lg) 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card-notes {
+  font-size: 0.9rem;
+}
+
+.card-notes li {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid rgba(28, 20, 16, 0.2);
+}
+
+.card-notes span {
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+.card-btn {
+  margin-top: auto;
+  text-align: center;
+  background: var(--espresso);
+  color: var(--cream);
+  padding: 0.75rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* =====================================================
+   10. TESTIMONIALS
+   ===================================================== */
+.testimonial {
+  background: var(--roast);
+}
+
+.testimonial-timeline {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.testimonial-card {
+  --from: 0px;
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  width: min(100%, 560px);
+  padding: 1.5rem;
+  background: var(--espresso);
+  border: 1px solid rgba(245, 237, 227, 0.1);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Mobile — center both variants */
+.testimonial-card.is-left,
+.testimonial-card.is-right {
+  justify-self: center;
+}
+
+.testimonial-avatar img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--caramel);
+}
+
+.testimonial-rating {
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.testimonial-quote {
+  font-style: italic;
+  margin-bottom: 0.75rem;
+}
+
+.testimonial-name {
+  font-weight: 700;
+}
+
+.testimonial-role {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* Scroll-driven slide-in */
+@supports (animation-timeline: view()) {
+  .testimonial-card {
+    animation: slide-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+  .is-left {
+    --from: -80px;
+  }
+  .is-right {
+    --from: 80px;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--from));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =====================================================
+   11. FOOTER
+   ===================================================== */
+.footer {
+  background: #120c09;
+  padding: var(--space-xl) var(--space-md) var(--space-lg);
+  color: var(--muted);
+}
+
+.footer a:hover {
+  color: var(--gold);
+}
+
+.footer-links {
+  max-width: var(--max-width);
+  margin: var(--space-lg) auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-lg);
+}
+
+.footer-column-title {
+  color: var(--cream);
+  margin-bottom: var(--space-md);
+}
+
+.footer-list li {
+  margin-bottom: 0.5rem;
+}
+
+/* =====================================================
+   12. ENHANCE — ≥ 768px (tablets)
+   ===================================================== */
+@media (min-width: 768px) {
+  section {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .nav-container {
+    padding: 0.75rem var(--space-lg);
+  }
+
+  .testimonial-timeline {
+    gap: var(--space-lg);
+  }
+}
+
+/* =====================================================
+   13. DESKTOP — ≥ 1025px
+   ===================================================== */
+@media (min-width: 1025px) {
+  /* Hide burger */
+  .hamburger-menu {
+    display: none;
+  }
+
+  /* Nav container becomes a horizontal bar */
+  .nav-container {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: 0.75rem var(--space-md);
+  }
+
+  /* Search resets to its desktop size */
+  .search-input {
+    flex: 1;
+    max-width: 320px;
+    margin: 0;
+  }
+
+  /* Nav list becomes horizontal, always visible */
+  .nav-list {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-lg);
+    margin-left: auto;
+    position: static;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    padding: 0;
+    z-index: auto;
+  }
+
+  /* Reset link styles for desktop */
+  .nav-link {
+    display: inline-block;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    background: transparent;
+  }
+
+  /* Underline effect — desktop only */
+  .nav-link::before {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--gold);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-link:hover::before,
+  .nav-link:focus-visible::before {
+    transform: scaleX(1);
+  }
+
+  /* Flip cards — hover to flip (desktop) */
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  /* Testimonials — alternate left / right */
+  .testimonial-card.is-left {
+    justify-self: start;
+  }
+
+  .testimonial-card.is-right {
+    justify-self: end;
+  }
+}
+
+/* =====================================================
+   14. WIDE DESKTOP — ≥ 1441px
+   ===================================================== */
+@media (min-width: 1441px) {
+  :root {
+    --space-xl: 6rem;
+  }
+
+  section {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .footer {
+    padding: 6rem var(--space-lg) 2rem;
+  }
+}
+
+/* =====================================================
+   15. REDUCED MOTION
+   ===================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .flip-card-inner {
+    transition: none;
+  }
+
+  .testimonial-card {
+    animation: none;
+  }
+}
+
+/* =====================================================
+   16. UTILITIES
+   ===================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
