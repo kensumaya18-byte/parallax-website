@@ -653,13 +653,27 @@
     </div>
 
     <section class="partnered-company">
-        <h1>Partner Company</h1>
+        <h2>Partner Company</h2>
 
-        <i class="fa-solid fa-mug-hot"></i> <!-- filled coffee cup -->
-        <i class="fa-solid fa-coffee"></i> <!-- coffee cup -->
-        <i class="fa-brands fa-google"></i> <!-- Google (brand) -->
-        <i class="fa-brands fa-apple"></i> <!-- Apple (brand) -->
-        <i class="fa-brands fa-spotify"></i> <!-- Spotify (brand) -->
+        <div class="partnered-company-carousel">
+            <div class="partnered-company-track">
+
+                <!-- Set 1 -->
+                <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                <i class="fa-solid fa-coffee" aria-hidden="true"></i>
+                <i class="fa-brands fa-google" aria-hidden="true"></i>
+                <i class="fa-brands fa-apple" aria-hidden="true"></i>
+                <i class="fa-brands fa-spotify" aria-hidden="true"></i>
+
+                <!-- Set 2 (exact duplicate — makes the loop seamless) -->
+                <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                <i class="fa-solid fa-coffee" aria-hidden="true"></i>
+                <i class="fa-brands fa-google" aria-hidden="true"></i>
+                <i class="fa-brands fa-apple" aria-hidden="true"></i>
+                <i class="fa-brands fa-spotify" aria-hidden="true"></i>
+
+            </div>
+        </div>
     </section>
 
 
@@ -844,6 +858,26 @@
         </div>
 
     </footer>
+
+
+    <script>
+        const burger = document.querySelector('.hamburger-menu');
+        const nav = document.querySelector('.nav-container');
+
+        burger.addEventListener('click', () => {
+            const open = burger.classList.toggle('is-open');
+            nav.classList.toggle('is-open', open);
+            burger.setAttribute('aria-expanded', open);
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('is-open');
+                nav.classList.remove('is-open');
+                burger.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
 
 
 

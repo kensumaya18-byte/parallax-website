@@ -101,6 +101,27 @@ section {
   padding: var(--space-xl) var(--space-md);
 }
 
+.intro-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 9999;
+  background-color: #120c09;
+
+  animation: intro 2.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+}
+
+@keyframes intro {
+  0% {
+    transform: translateY(0);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
 /* =====================================================
    4. HEADER / NAV — mobile-first base
    ===================================================== */
@@ -134,12 +155,11 @@ section {
 
 /* ---------- Search — full width on mobile ---------- */
 .search-input {
+  display: none;
   position: relative;
   flex: 1;
   max-width: none;
   margin: 0;
-  display: flex;
-  align-items: center;
 }
 
 .search-icon-svg {
@@ -595,6 +615,566 @@ section {
 }
 
 /* =====================================================
+   17. INFORMATION — business info + sticky map
+   ===================================================== */
+/* =====================================================
+   INFORMATION — business info + sticky map
+   ===================================================== */
+.information {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+
+  /* Scroll timeline — consumed by .business-location__maps below */
+  scroll-timeline-name: info-scroll;
+  scroll-timeline-axis: block;
+}
+
+.business-information {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.info-header {
+  margin-bottom: var(--space-md);
+}
+
+.info-tagline {
+  color: var(--caramel);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.info-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 0.75rem;
+}
+
+.info-subtitle {
+  color: var(--muted);
+}
+
+.info-block {
+  display: flex;
+  gap: var(--space-md);
+  padding: 1.25rem;
+  background: var(--roast);
+  border: 1px solid rgba(245, 237, 227, 0.08);
+  border-radius: var(--radius);
+}
+
+.info-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.info-block-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--gold);
+}
+
+.info-body p,
+.info-body ul {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.info-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--gold);
+  font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.info-link:hover {
+  border-bottom-color: var(--gold);
+}
+
+/* Hours */
+.hours-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(245, 237, 227, 0.08);
+}
+
+.hours-list li:last-child {
+  border-bottom: none;
+}
+
+.hours-list .is-highlight {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Contact */
+.contact-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: 0.35rem 0;
+}
+
+.contact-label {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+/* Amenities */
+.amenities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.amenities-list li {
+  padding: 0.35rem 0.75rem;
+  background: rgba(232, 181, 122, 0.12);
+  color: var(--cream);
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+/* Sticky map */
+.business-location__maps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--roast);
+  box-shadow: var(--shadow);
+}
+
+.business-location__maps iframe {
+  width: 100%;
+  height: 420px;
+  border: 0;
+  display: block;
+}
+
+.map-open-link {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  background: var(--caramel);
+  color: var(--espresso);
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.map-open-link:hover {
+  background: var(--gold);
+}
+
+/* Scroll-driven fade-in — only in browsers that support it */
+@supports (animation-timeline: scroll()) {
+  .business-location__maps {
+    animation: info-map-fade linear both;
+    animation-timeline: info-scroll;
+    animation-range: entry 0% cover 40%;
+  }
+
+  @keyframes info-map-fade {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* Desktop — side-by-side + sticky map */
+@media (min-width: 1025px) {
+  .information {
+    grid-template-columns: 1.2fr 1fr;
+    align-items: start;
+  }
+
+  .business-location__maps {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+/* Reduced motion — turn off the scroll fade, keep sticky */
+@media (prefers-reduced-motion: reduce) {
+  .business-location__maps {
+    animation: none;
+  }
+}
+/* =====================================================
+   18. PROMO TYPES — ongoing offers
+   ===================================================== */
+.promo-types {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: var(--space-xl) var(--space-md);
+}
+
+.promo-types-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 3rem;
+}
+
+.promo-types-tagline {
+  color: var(--caramel);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.promo-types-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 0.75rem;
+}
+
+.promo-types-subtitle {
+  color: var(--muted);
+}
+
+.promo-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-lg);
+}
+
+.promo-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.75rem;
+  background: var(--roast);
+  border: 1px solid rgba(245, 237, 227, 0.08);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s;
+}
+
+.promo-card:hover {
+  transform: translateY(-4px);
+}
+
+.promo-card.is-featured {
+  border-color: var(--gold);
+  background: linear-gradient(160deg, var(--roast), #3a2a20);
+}
+
+.promo-card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--gold);
+  color: var(--espresso);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.promo-card-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.promo-card-title {
+  font-size: 1.25rem;
+  color: var(--cream);
+}
+
+.promo-card-desc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  flex-grow: 1;
+}
+
+.promo-card-code {
+  font-size: 0.85rem;
+  color: var(--gold);
+}
+
+.promo-card-link {
+  color: var(--cream);
+  font-weight: 600;
+  border-bottom: 1px solid var(--gold);
+  align-self: flex-start;
+  transition: color 0.2s;
+}
+
+.promo-card-link:hover {
+  color: var(--gold);
+}
+
+/* =====================================================
+   19. DEAL OF THE WEEK
+   ===================================================== */
+.promo-deal {
+  background: linear-gradient(135deg, #2a1e17, #4a3324);
+  padding: var(--space-xl) var(--space-md);
+}
+
+.promo-deal-content {
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.promo-deal-tagline {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+}
+
+.promo-deal-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.promo-deal-desc {
+  color: var(--muted);
+  max-width: 540px;
+}
+
+.promo-deal-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: var(--cream);
+}
+
+.promo-deal-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.promo-deal-price-old {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.promo-deal-price-new {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.promo-deal-price-save {
+  background: var(--gold);
+  color: var(--espresso);
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.promo-deal-timer {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* =====================================================
+   20. UPCOMING EVENTS
+   ===================================================== */
+.promo-upcoming {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: var(--space-xl) var(--space-md);
+}
+
+.promo-upcoming-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 3rem;
+}
+
+.promo-upcoming-tagline {
+  color: var(--caramel);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.promo-upcoming-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 0.75rem;
+}
+
+.promo-upcoming-subtitle {
+  color: var(--muted);
+}
+
+.promo-upcoming-list {
+  display: grid;
+  gap: var(--space-md);
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+.promo-event {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 1.25rem;
+  background: var(--roast);
+  border: 1px solid rgba(245, 237, 227, 0.08);
+  border-radius: var(--radius);
+}
+
+.promo-event-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  padding: 0.5rem 0.75rem;
+  background: var(--caramel);
+  color: var(--espresso);
+  border-radius: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.promo-event-month {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.promo-event-day {
+  font-size: 1.4rem;
+}
+
+.promo-event-info {
+  flex: 1;
+}
+
+.promo-event-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.promo-event-desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.promo-event-tag {
+  font-size: 0.75rem;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* =====================================================
+   21. PARTNERED COMPANY
+   ===================================================== */
+.partnered-company {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: var(--space-xl) var(--space-md);
+  text-align: center;
+}
+
+.partnered-company h2 {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  margin-bottom: var(--space-lg);
+}
+
+/* Viewport window — hides the overflow */
+.partnered-company-carousel {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  /* Soft fade on both edges so icons don't hard-cut */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+
+/* The moving track */
+.partnered-company-track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  width: max-content; /* let it grow past the viewport */
+
+  animation: partners-marquee 20s linear infinite;
+}
+
+/* Icon styling */
+.partnered-company-track i {
+  font-size: 2.5rem;
+  color: var(--muted);
+  flex-shrink: 0; /* prevent squishing */
+  transition:
+    color 0.2s,
+    transform 0.2s;
+}
+
+.partnered-company-track i:hover {
+  color: var(--gold);
+  transform: translateY(-4px);
+}
+
+/* Move by exactly 50% — that's the width of ONE set */
+@keyframes partners-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause on hover — nice UX touch */
+.partnered-company-carousel:hover .partnered-company-track {
+  animation-play-state: paused;
+}
+
+/* Mobile — smaller icons */
+@media (max-width: 767px) {
+  .partnered-company-track i {
+    font-size: 1.75rem;
+  }
+}
+/* =====================================================
    11. FOOTER
    ===================================================== */
 .footer {
@@ -660,6 +1240,7 @@ section {
 
   /* Search resets to its desktop size */
   .search-input {
+    display: flex;
     flex: 1;
     max-width: 320px;
     margin: 0;
@@ -726,6 +1307,10 @@ section {
   .testimonial-card.is-right {
     justify-self: end;
   }
+}
+
+.partnered-company i {
+  font-size: 3rem;
 }
 
 /* =====================================================
